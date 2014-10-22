@@ -1,6 +1,8 @@
 require "slowpoke/version"
 require "rack-timeout"
 require "robustly"
+require "slowpoke/controller"
+require "slowpoke/postgres"
 require "slowpoke/railtie"
 require "action_dispatch/middleware/exception_wrapper"
 require "action_controller/base"
@@ -22,11 +24,13 @@ module Slowpoke
   end
 end
 
+# custom error page
+ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestTimeoutError"] = :service_unavailable
+
 # remove noisy logger
 Rack::Timeout.unregister_state_change_observer(:logger)
 
-ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestTimeoutError"] = :service_unavailable
-
+# process protection and notifications
 Rack::Timeout.register_state_change_observer(:slowpoke) do |env|
   case env[Rack::Timeout::ENV_INFO_KEY].state
   when :timed_out
@@ -44,55 +48,7 @@ Rack::Timeout.register_state_change_observer(:slowpoke) do |env|
 end
 
 # bubble exceptions for error reporting libraries
-module Slowpoke
-  module Controller
-    extend ActiveSupport::Concern
-
-    included do
-      around_filter :bubble_timeout
-    end
-
-    private
-
-    def bubble_timeout
-      yield
-    rescue => exception
-      if exception.respond_to?(:original_exception) and exception.original_exception.is_a?(Rack::Timeout::Error)
-        raise exception.original_exception
-      else
-        raise exception
-      end
-    end
-
-  end
-end
-
 ActionController::Base.send(:include, Slowpoke::Controller)
 
 # database timeout
-module Slowpoke
-  module Postgres
-    extend ActiveSupport::Concern
-
-    included do
-      alias_method_chain :configure_connection, :statement_timeout
-    end
-
-    def configure_connection_with_statement_timeout
-      configure_connection_without_statement_timeout
-      safely do
-        timeout = Slowpoke.database_timeout || Slowpoke.timeout
-        if ActiveRecord::Base.logger
-          ActiveRecord::Base.logger.silence do
-            execute("SET statement_timeout = #{timeout * 1000}")
-          end
-        else
-          execute("SET statement_timeout = #{timeout * 1000}")
-        end
-      end
-    end
-
-  end
-end
-
 ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send(:include, Slowpoke::Postgres)
