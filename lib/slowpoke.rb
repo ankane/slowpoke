@@ -42,6 +42,12 @@ class ActionController::Base
 
   def rescue_from_timeout(exception)
     ActiveSupport::Notifications.instrument("timeout.slowpoke", {})
+
+    # extremely important
+    # protect the process with a restart
+    # https://github.com/heroku/rack-timeout/issues/39
+    Process.kill "QUIT", Process.pid
+
     raise exception
   end
   rescue_from Rack::Timeout::Error, with: :rescue_from_timeout
