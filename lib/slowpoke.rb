@@ -19,6 +19,7 @@ module Slowpoke
   end
 end
 
+# remove noisy logger
 Rack::Timeout.unregister_state_change_observer(:logger)
 
 ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestTimeoutError"] = :service_unavailable
@@ -34,6 +35,7 @@ class ActionView::Template
 
 end
 
+# notifications
 class ActionController::Base
 
   def rescue_from_timeout(exception)
@@ -44,7 +46,7 @@ class ActionController::Base
 
 end
 
-# timeout queries after a minute
+# database timeout
 class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
 
   def configure_connection_with_statement_timeout
