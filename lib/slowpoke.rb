@@ -26,31 +26,36 @@ Rack::Timeout.unregister_state_change_observer(:logger)
 
 ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestTimeoutError"] = :service_unavailable
 
-# hack to bubble timeout errors
-class ActionView::Template
-
-  def handle_render_error_with_timeout(view, e)
-    raise e if e.is_a?(Rack::Timeout::Error)
-    handle_render_error_without_timeout(view, e)
-  end
-  alias_method_chain :handle_render_error, :timeout
-
-end
-
 # notifications
 class ActionController::Base
 
-  def rescue_from_timeout(exception)
-    ActiveSupport::Notifications.instrument("timeout.slowpoke", {})
+  around_filter :catch_timeout
 
-    # extremely important
-    # protect the process with a restart
-    # https://github.com/heroku/rack-timeout/issues/39
-    Process.kill "QUIT", Process.pid
+  private
 
-    raise exception
+  def catch_timeout
+    yield
+  rescue => exception
+    timeout_exception =
+      if exception.is_a?(Rack::Timeout::Error)
+        exception
+      elsif exception.respond_to?(:original_exception) and exception.original_exception.is_a?(Rack::Timeout::Error)
+        exception.original_exception
+      end
+
+    if timeout_exception
+      ActiveSupport::Notifications.instrument("timeout.slowpoke", {})
+
+      # extremely important
+      # protect the process with a restart
+      # https://github.com/heroku/rack-timeout/issues/39
+      Process.kill "QUIT", Process.pid
+
+      raise timeout_exception
+    else
+      raise exception
+    end
   end
-  rescue_from Rack::Timeout::Error, with: :rescue_from_timeout
 
 end
 
