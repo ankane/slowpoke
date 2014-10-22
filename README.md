@@ -6,6 +6,8 @@ Timeouts made easy
 - database timeouts
 - notifications
 
+**Important note:** [Timing out requests without exiting is unsafe](https://github.com/heroku/rack-timeout/issues/39) - complete solution coming soon
+
 ## Installation
 
 Add this line to your application’s Gemfile:
