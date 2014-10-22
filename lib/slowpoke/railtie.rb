@@ -3,7 +3,7 @@ module Slowpoke
 
     initializer "slowpoke" do
       Slowpoke.timeout = (ENV["TIMEOUT"] || 15).to_i
-      ActiveRecord::Base.logger.class.send(:include, ::LoggerSilence)
+      ActiveRecord::Base.logger.class.send(:include, ::LoggerSilence) if ActiveRecord::Base.logger
     end
 
   end
