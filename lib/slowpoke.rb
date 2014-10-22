@@ -8,6 +8,8 @@ require "active_record/connection_adapters/postgresql_adapter"
 require "action_dispatch/middleware/exception_wrapper"
 
 module Slowpoke
+  ENV_KEY = "slowpoke.timed_out"
+
   class << self
     attr_accessor :database_timeout
   end
@@ -27,20 +29,18 @@ Rack::Timeout.unregister_state_change_observer(:logger)
 ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestTimeoutError"] = :service_unavailable
 
 Rack::Timeout.register_state_change_observer(:slowpoke) do |env|
-  case env["rack-timeout.info"].state
+  case env[Rack::Timeout::ENV_INFO_KEY].state
   when :timed_out
-    env["slowpoke.timed_out"] = true
+    env[Slowpoke::ENV_KEY] = true
 
     # TODO better payload
     ActiveSupport::Notifications.instrument("timeout.slowpoke", {})
   when :completed
-    if env["slowpoke.timed_out"]
-      # extremely important
-      # protect the process with a restart
-      # https://github.com/heroku/rack-timeout/issues/39
-      # can't do in timed_out state consistently
-      Process.kill "QUIT", Process.pid
-    end
+    # extremely important
+    # protect the process with a restart
+    # https://github.com/heroku/rack-timeout/issues/39
+    # can't do in timed_out state consistently
+    Process.kill "QUIT", Process.pid if env[Slowpoke::ENV_KEY]
   end
 end
 
