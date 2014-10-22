@@ -40,7 +40,7 @@ Rack::Timeout.register_state_change_observer(:slowpoke) do |env|
     # protect the process with a restart
     # https://github.com/heroku/rack-timeout/issues/39
     # can't do in timed_out state consistently
-    Process.kill "QUIT", Process.pid if env[Slowpoke::ENV_KEY]
+    Process.kill("QUIT", Process.pid) if env[Slowpoke::ENV_KEY]
   end
 end
 
