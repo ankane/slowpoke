@@ -44,7 +44,7 @@ Rack::Timeout.register_state_change_observer(:slowpoke) do |env|
   end
 end
 
-# bubble exceptions correctly
+# bubble exceptions for error reporting libraries
 class ActionController::Base
 
   around_filter :bubble_timeout
