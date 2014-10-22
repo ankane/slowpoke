@@ -2,7 +2,7 @@ module Slowpoke
   class Railtie < Rails::Railtie
 
     initializer "slowpoke" do
-      Slowpoke.timeout = (ENV["TIMEOUT"] || 15).to_i
+      Rack::Timeout.service_timeout = Slowpoke.timeout
       ActiveRecord::Base.logger.class.send(:include, ::LoggerSilence) if ActiveRecord::Base.logger
     end
 

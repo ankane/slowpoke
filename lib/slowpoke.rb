@@ -9,13 +9,15 @@ require "action_dispatch/middleware/exception_wrapper"
 
 module Slowpoke
   class << self
-    attr_reader :timeout
     attr_accessor :database_timeout
   end
 
+  def self.timeout
+    @timeout ||= (ENV["TIMEOUT"] || 15).to_i
+  end
+
   def self.timeout=(timeout)
-    @timeout = timeout
-    Rack::Timeout.timeout = timeout
+    @timeout = Rack::Timeout.timeout = timeout
   end
 end
 
