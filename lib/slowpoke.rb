@@ -26,37 +26,41 @@ Rack::Timeout.unregister_state_change_observer(:logger)
 
 ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestTimeoutError"] = :service_unavailable
 
-# notifications
-class ActionController::Base
+Rack::Timeout.register_state_change_observer(:slowpoke) do |env|
+  case env["rack-timeout.info"].state
+  when :timed_out
+    env["slowpoke.timed_out"] = true
 
-  around_filter :catch_timeout
+    # TODO better payload
+    ActiveSupport::Notifications.instrument("timeout.slowpoke", {})
+  when :completed
+    # can't do in timed_out state
 
-  private
-
-  def catch_timeout
-    yield
-  rescue => exception
-    timeout_exception =
-      if exception.is_a?(Rack::Timeout::Error)
-        exception
-      elsif exception.respond_to?(:original_exception) and exception.original_exception.is_a?(Rack::Timeout::Error)
-        exception.original_exception
-      end
-
-    if timeout_exception
-      ActiveSupport::Notifications.instrument("timeout.slowpoke", {})
-
+    if env["slowpoke.timed_out"]
       # extremely important
       # protect the process with a restart
       # https://github.com/heroku/rack-timeout/issues/39
       Process.kill "QUIT", Process.pid
+    end
+  end
+end
 
-      raise timeout_exception
+# bubble exceptions correctly
+class ActionController::Base
+
+  around_filter :bubble_timeout
+
+  private
+
+  def bubble_timeout
+    yield
+  rescue => exception
+    if exception.respond_to?(:original_exception) and exception.original_exception.is_a?(Rack::Timeout::Error)
+      raise exception.original_exception
     else
       raise exception
     end
   end
-
 end
 
 # database timeout
