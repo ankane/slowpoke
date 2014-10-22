@@ -52,7 +52,6 @@ class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
     safely do
       timeout = Slowpoke.database_timeout || Slowpoke.timeout
       if ActiveRecord::Base.logger
-        ActiveRecord::Base.logger.class.send(:include, ::LoggerSilence)
         ActiveRecord::Base.logger.silence do
           execute("SET statement_timeout = #{timeout * 1000}")
         end
