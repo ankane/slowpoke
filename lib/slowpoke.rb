@@ -34,12 +34,11 @@ Rack::Timeout.register_state_change_observer(:slowpoke) do |env|
     # TODO better payload
     ActiveSupport::Notifications.instrument("timeout.slowpoke", {})
   when :completed
-    # can't do in timed_out state
-
     if env["slowpoke.timed_out"]
       # extremely important
       # protect the process with a restart
       # https://github.com/heroku/rack-timeout/issues/39
+      # can't do in timed_out state consistently
       Process.kill "QUIT", Process.pid
     end
   end
