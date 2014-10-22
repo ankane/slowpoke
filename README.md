@@ -28,9 +28,13 @@ The default timeout is 15 seconds. Change this with:
 Slowpoke.timeout = 10 # seconds
 ```
 
-or use `ENV["TIMEOUT"]`.
+or use:
 
-For PostgreSQL (ActiveRecord), change the database timeout with:
+```ruby
+ENV["TIMEOUT"] = 10
+```
+
+For ActiveRecord (PostgreSQL only), change the database timeout with:
 
 ```ruby
 Slowpoke.database_timeout = 5
@@ -40,7 +44,7 @@ Subscribe to timeouts
 
 ```ruby
 ActiveSupport::Notifications.subscribe "timeout.slowpoke" do |name, start, finish, id, payload|
-  Rollbar.report_message "Timeout", "info"
+  # report timeout
 end
 ```
 
