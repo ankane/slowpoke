@@ -9,7 +9,7 @@ require "action_controller/base"
 require "active_record/connection_adapters/postgresql_adapter"
 
 module Slowpoke
-  ENV_KEY = "slowpoke.timed_out"
+  ENV_KEY = "slowpoke.timed_out".freeze
 
   class << self
     attr_accessor :database_timeout
