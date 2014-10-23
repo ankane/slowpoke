@@ -34,18 +34,20 @@ or use:
 ENV["TIMEOUT"] = 10
 ```
 
-For ActiveRecord (PostgreSQL only), change the database timeout with:
-
-```ruby
-Slowpoke.database_timeout = 5
-```
-
 Subscribe to timeouts
 
 ```ruby
 ActiveSupport::Notifications.subscribe "timeout.slowpoke" do |name, start, finish, id, payload|
   # report timeout
 end
+```
+
+### Database Timeouts
+
+For ActiveRecord (PostgreSQL only), change the database timeout with:
+
+```ruby
+Slowpoke.database_timeout = 5
 ```
 
 ## Contributing
