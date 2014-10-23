@@ -20,6 +20,7 @@ module Slowpoke
   end
 
   def self.timeout=(timeout)
+    timeout = timeout.to_i if timeout
     @timeout = Rack::Timeout.timeout = timeout
   end
 end
