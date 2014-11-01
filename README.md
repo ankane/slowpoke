@@ -36,6 +36,20 @@ ActiveSupport::Notifications.subscribe "timeout.slowpoke" do |name, start, finis
 end
 ```
 
+### Dynamic Timeouts
+
+Add this line to your application’s Gemfile:
+
+```ruby
+gem 'rack-timeout', github: 'ankane/rack-timeout'
+```
+
+And use:
+
+```ruby
+Slowpoke.timeout = proc{|env| env["REQUEST_PATH"].start_with?("/admin") ? 15 : 5 }
+```
+
 ### Database Timeouts
 
 For ActiveRecord (PostgreSQL only), change the database timeout with:
@@ -48,7 +62,6 @@ Defaults to the request timeout.
 
 ## TODO
 
-- dynamic request timeouts
 - block to bypass or change database timeout
 
 ## Contributing
