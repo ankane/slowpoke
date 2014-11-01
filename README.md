@@ -25,13 +25,7 @@ This creates a `public/503.html` you can customize.
 The default timeout is 15 seconds. Change this with:
 
 ```ruby
-Slowpoke.timeout = 10 # seconds
-```
-
-or use:
-
-```ruby
-ENV["TIMEOUT"] = 10
+ENV["REQUEST_TIMEOUT"] = 10
 ```
 
 Subscribe to timeouts
@@ -47,8 +41,10 @@ end
 For ActiveRecord (PostgreSQL only), change the database timeout with:
 
 ```ruby
-Slowpoke.database_timeout = 5
+ENV["DATABASE_TIMEOUT"] = 10
 ```
+
+Defaults to the request timeout.
 
 ## Contributing
 

@@ -12,11 +12,15 @@ module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
 
   class << self
-    attr_accessor :database_timeout
+    attr_writer :database_timeout
   end
 
   def self.timeout
-    @timeout ||= (ENV["TIMEOUT"] || 15).to_i
+    @timeout ||= (ENV["REQUEST_TIMEOUT"] || ENV["TIMEOUT"] || 15).to_i
+  end
+
+  def self.database_timeout
+    @database_timeout ||= ENV["DATABASE_TIMEOUT"]
   end
 
   def self.timeout=(timeout)
