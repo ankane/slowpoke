@@ -19,14 +19,15 @@ module Slowpoke
     @timeout ||= (ENV["REQUEST_TIMEOUT"] || ENV["TIMEOUT"] || 15).to_i
   end
 
-  def self.database_timeout
-    @database_timeout ||= ENV["DATABASE_TIMEOUT"]
-  end
-
   def self.timeout=(timeout)
     timeout = timeout.to_i if timeout
     @timeout = Rack::Timeout.timeout = timeout
   end
+
+  def self.database_timeout
+    @database_timeout ||= ENV["DATABASE_TIMEOUT"].to_i if ENV["DATABASE_TIMEOUT"]
+  end
+
 end
 
 # custom error page
