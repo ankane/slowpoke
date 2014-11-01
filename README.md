@@ -58,7 +58,7 @@ For ActiveRecord (PostgreSQL only), change the database timeout with:
 Slowpoke.database_timeout = 10 # or set ENV["DATABASE_TIMEOUT"]
 ```
 
-Defaults to the request timeout.
+Defaults to the request timeout (or 15 if you use dynamic timeouts).
 
 ## TODO
 
