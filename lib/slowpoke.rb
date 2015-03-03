@@ -6,7 +6,6 @@ require "slowpoke/postgres"
 require "slowpoke/railtie"
 require "action_dispatch/middleware/exception_wrapper"
 require "action_controller/base"
-require "active_record/connection_adapters/postgresql_adapter"
 
 module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
@@ -56,5 +55,8 @@ end
 # bubble exceptions for error reporting libraries
 ActionController::Base.send(:include, Slowpoke::Controller)
 
-# database timeout
-ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send(:include, Slowpoke::Postgres)
+if defined?(PG)
+  require "active_record/connection_adapters/postgresql_adapter"
+  # database timeout
+  ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send(:include, Slowpoke::Postgres)
+end
