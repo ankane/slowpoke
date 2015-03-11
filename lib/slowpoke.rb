@@ -26,7 +26,6 @@ module Slowpoke
   def self.database_timeout
     @database_timeout ||= ENV["DATABASE_TIMEOUT"].to_i if ENV["DATABASE_TIMEOUT"]
   end
-
 end
 
 # custom error page

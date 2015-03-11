@@ -11,12 +11,11 @@ module Slowpoke
     def bubble_timeout
       yield
     rescue => exception
-      if exception.respond_to?(:original_exception) and exception.original_exception.is_a?(Rack::Timeout::Error)
+      if exception.respond_to?(:original_exception) && exception.original_exception.is_a?(Rack::Timeout::Error)
         raise exception.original_exception
       else
         raise exception
       end
     end
-
   end
 end

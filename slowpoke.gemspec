@@ -1,15 +1,15 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'slowpoke/version'
+require "slowpoke/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "slowpoke"
   spec.version       = Slowpoke::VERSION
   spec.authors       = ["Andrew Kane"]
   spec.email         = ["andrew@chartkick.com"]
-  spec.summary       = %q{Timeouts made easy}
-  spec.description   = %q{Timeouts made easy}
+  spec.summary       = "Timeouts made easy"
+  spec.description   = "Timeouts made easy"
   spec.homepage      = "https://github.com/ankane/slowpoke"
   spec.license       = "MIT"
 

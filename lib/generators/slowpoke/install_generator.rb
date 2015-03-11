@@ -8,7 +8,6 @@ module Slowpoke
       def copy_503_html
         template "503.html", "public/503.html"
       end
-
     end
   end
 end
