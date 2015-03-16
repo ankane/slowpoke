@@ -1,6 +1,6 @@
 require "slowpoke/version"
 require "rack-timeout"
-require "robustly"
+require "safely_block"
 require "slowpoke/controller"
 require "slowpoke/postgres"
 require "slowpoke/railtie"
