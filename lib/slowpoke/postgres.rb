@@ -7,11 +7,11 @@ module Slowpoke
     end
 
     def configure_connection_with_statement_timeout
-      configure_connection_without_statement_timeout
+      value = configure_connection_without_statement_timeout
       safely do
         timeout = Slowpoke.database_timeout || Slowpoke.timeout
         if timeout && !timeout.respond_to?(:call)
-          if ActiveRecord::Base.logger
+          if ActiveRecord::Base.logger && ActiveRecord::Base.logger.respond_to?(:silence)
             ActiveRecord::Base.logger.silence do
               execute("SET statement_timeout = #{timeout * 1000}")
             end
@@ -20,6 +20,7 @@ module Slowpoke
           end
         end
       end
+      value
     end
   end
 end
