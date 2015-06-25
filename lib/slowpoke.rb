@@ -30,6 +30,7 @@ end
 
 # custom error page
 ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestTimeoutError"] = :service_unavailable
+ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestExpiryError"] = :service_unavailable
 
 # remove noisy logger
 Rack::Timeout.unregister_state_change_observer(:logger)
