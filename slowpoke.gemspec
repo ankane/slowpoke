@@ -18,12 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "rails"
   spec.add_dependency "rack-timeout", ">= 0.1.0"
   spec.add_dependency "safely_block"
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "minitest", ">= 5"
-  spec.add_development_dependency "rails"
-  spec.add_development_dependency "pg"
 end

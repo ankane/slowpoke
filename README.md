@@ -1,10 +1,10 @@
 # Slowpoke
 
-Timeouts made easy
+[Rack::Timeout](https://github.com/heroku/rack-timeout) is great. Slowpoke makes it better with:
 
-- custom error page
-- database timeouts
-- notifications
+- custom error pages
+- [safer service timeouts](https://github.com/heroku/rack-timeout/issues/39)
+- wait timeouts that don’t kill your web server
 
 ## Installation
 
@@ -22,13 +22,21 @@ rails generate slowpoke:install
 
 This creates a `public/503.html` you can customize.
 
+## How to Use
+
 The default timeout is 15 seconds. Change this with:
 
 ```ruby
-Slowpoke.timeout = 10 # or set ENV["REQUEST_TIMEOUT"]
+Slowpoke.timeout = 10
 ```
 
-Subscribe to timeouts
+or set:
+
+```ruby
+ENV["REQUEST_TIMEOUT"]
+```
+
+Subscribe to timeouts with:
 
 ```ruby
 ActiveSupport::Notifications.subscribe "timeout.slowpoke" do |name, start, finish, id, payload|
@@ -36,33 +44,21 @@ ActiveSupport::Notifications.subscribe "timeout.slowpoke" do |name, start, finis
 end
 ```
 
-### Dynamic Timeouts
+To learn more, see the [Rack::Timeout documentation](https://github.com/heroku/rack-timeout#the-rabbit-hole).
 
-Add this line to your application’s Gemfile:
+## Database Timeouts
 
-```ruby
-gem 'rack-timeout', github: 'ankane/rack-timeout'
+For PostgreSQL, set a statement timeout in `config/database.yml`:
+
+```yaml
+production:
+  variables:
+    statement_timeout: 30000 # ms
 ```
 
-And use:
+## Upgrading
 
-```ruby
-Slowpoke.timeout = proc{|env| env["REQUEST_PATH"].start_with?("/admin") ? 15 : 5 }
-```
-
-### Database Timeouts
-
-For ActiveRecord (PostgreSQL only), change the database timeout with:
-
-```ruby
-Slowpoke.database_timeout = 10 # or set ENV["DATABASE_TIMEOUT"]
-```
-
-Defaults to the request timeout (or no timeout if you use dynamic timeouts).
-
-## TODO
-
-- block to bypass or change database timeout
+`0.1.0` removes database timeouts, since Rails supports them by default.
 
 ## Contributing
 

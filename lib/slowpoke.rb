@@ -2,17 +2,12 @@ require "slowpoke/version"
 require "rack-timeout"
 require "safely_block"
 require "slowpoke/controller"
-require "slowpoke/postgres"
 require "slowpoke/railtie"
 require "action_dispatch/middleware/exception_wrapper"
 require "action_controller/base"
 
 module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
-
-  class << self
-    attr_writer :database_timeout
-  end
 
   def self.timeout
     @timeout ||= (ENV["REQUEST_TIMEOUT"] || ENV["TIMEOUT"] || 15).to_i
@@ -22,14 +17,11 @@ module Slowpoke
     timeout = timeout.to_i if timeout.respond_to?(:to_i)
     @timeout = Rack::Timeout.timeout = timeout
   end
-
-  def self.database_timeout
-    @database_timeout ||= ENV["DATABASE_TIMEOUT"].to_i if ENV["DATABASE_TIMEOUT"]
-  end
 end
 
 # custom error page
 ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestTimeoutError"] = :service_unavailable
+ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestExpiryError"] = :service_unavailable
 
 # remove noisy logger
 Rack::Timeout.unregister_state_change_observer(:logger)
@@ -53,9 +45,3 @@ end
 
 # bubble exceptions for error reporting libraries
 ActionController::Base.send(:include, Slowpoke::Controller)
-
-if defined?(PG)
-  require "active_record/connection_adapters/postgresql_adapter"
-  # database timeout
-  ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send(:include, Slowpoke::Postgres)
-end
