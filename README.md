@@ -58,7 +58,13 @@ production:
 
 ## Upgrading
 
-`0.1.0` removes database timeouts, since Rails supports them by default.
+`0.1.0` removes database timeouts, since Rails supports them by default.  To restore the previous behavior, use:
+
+```yaml
+production:
+  variables:
+    statement_timeout: <%= Slowpoke.timeout * 1000 %>
+```
 
 ## Contributing
 
