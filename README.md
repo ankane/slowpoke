@@ -62,6 +62,12 @@ To use a different timeout for migrations, set: [master]
 ENV["MIGRATION_STATEMENT_TIMEOUT"] = 60000 # ms
 ```
 
+Test timeouts with the [pg_sleep](http://www.postgresql.org/docs/9.0/static/functions-datetime.html#FUNCTIONS-DATETIME-DELAY) function.
+
+```sql
+SELECT pg_sleep(20);
+```
+
 ## Upgrading
 
 `0.1.0` removes database timeouts, since Rails supports them by default.  To restore the previous behavior, use:
