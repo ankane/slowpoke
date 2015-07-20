@@ -5,6 +5,7 @@ require "slowpoke/controller"
 require "slowpoke/railtie"
 require "action_dispatch/middleware/exception_wrapper"
 require "action_controller/base"
+require "slowpoke/migration"
 
 module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze

@@ -53,7 +53,13 @@ For PostgreSQL, set a statement timeout in `config/database.yml`:
 ```yaml
 production:
   variables:
-    statement_timeout: 30000 # ms
+    statement_timeout: 250 # ms
+```
+
+To use a different timeout for migrations, set: [master]
+
+```ruby
+ENV["MIGRATION_TIMEOUT"] = 60 # sec
 ```
 
 ## Upgrading
