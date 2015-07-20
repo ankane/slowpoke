@@ -59,7 +59,7 @@ production:
 To use a different timeout for migrations, set: [master]
 
 ```ruby
-ENV["MIGRATION_TIMEOUT"] = 60 # sec
+ENV["MIGRATION_STATEMENT_TIMEOUT"] = 60000 # ms
 ```
 
 ## Upgrading
