@@ -48,7 +48,7 @@ To learn more, see the [Rack::Timeout documentation](https://github.com/heroku/r
 
 ## Database Timeouts
 
-For PostgreSQL, set a statement timeout in `config/database.yml`:
+For PostgreSQL, set connect and statement timeouts in `config/database.yml`:
 
 ```yaml
 production:
