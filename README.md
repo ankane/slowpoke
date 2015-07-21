@@ -63,7 +63,14 @@ To use a different statement timeout for migrations, set: [master]
 ENV["MIGRATION_STATEMENT_TIMEOUT"] = 60000 # ms
 ```
 
-Test timeouts with the [pg_sleep](http://www.postgresql.org/docs/9.0/static/functions-datetime.html#FUNCTIONS-DATETIME-DELAY) function.
+Test connect timeouts by setting your database host to an [unroutable IP](http://stackoverflow.com/questions/100841/artificially-create-a-connection-timeout-error).
+
+```yaml
+development:
+  host: 10.255.255.1
+```
+
+Test statement timeouts with the [pg_sleep](http://www.postgresql.org/docs/9.0/static/functions-datetime.html#FUNCTIONS-DATETIME-DELAY) function.
 
 ```sql
 SELECT pg_sleep(20);
