@@ -36,6 +36,12 @@ or set:
 ENV["REQUEST_TIMEOUT"]
 ```
 
+Test by adding a `sleep` call to one of your actions:
+
+```ruby
+sleep(20)
+```
+
 Subscribe to timeouts with:
 
 ```ruby
