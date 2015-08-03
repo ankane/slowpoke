@@ -2,10 +2,11 @@ require "slowpoke/version"
 require "rack-timeout"
 require "safely_block"
 require "slowpoke/controller"
+require "slowpoke/middleware"
+require "slowpoke/migration"
 require "slowpoke/railtie"
 require "action_dispatch/middleware/exception_wrapper"
 require "action_controller/base"
-require "slowpoke/migration"
 
 module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
@@ -29,18 +30,11 @@ Rack::Timeout.unregister_state_change_observer(:logger)
 
 # process protection and notifications
 Rack::Timeout.register_state_change_observer(:slowpoke) do |env|
-  case env[Rack::Timeout::ENV_INFO_KEY].state
-  when :timed_out
+  if env[Rack::Timeout::ENV_INFO_KEY].state == :timed_out
     env[Slowpoke::ENV_KEY] = true
 
     # TODO better payload
     ActiveSupport::Notifications.instrument("timeout.slowpoke", {})
-  when :completed
-    # extremely important
-    # protect the process with a restart
-    # https://github.com/heroku/rack-timeout/issues/39
-    # can't do in timed_out state consistently
-    Process.kill("QUIT", Process.pid) if env[Slowpoke::ENV_KEY]
   end
 end
 
