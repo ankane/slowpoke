@@ -63,7 +63,7 @@ production:
     statement_timeout: 250 # ms
 ```
 
-To use a different statement timeout for migrations, set: [master]
+To use a different statement timeout for migrations, set:
 
 ```ruby
 ENV["MIGRATION_STATEMENT_TIMEOUT"] = 60000 # ms
@@ -91,6 +91,10 @@ production:
   variables:
     statement_timeout: <%= Slowpoke.timeout * 1000 %>
 ```
+
+## History
+
+View the [changelog](https://github.com/ankane/slowpoke/blob/master/CHANGELOG.md)
 
 ## Contributing
 
