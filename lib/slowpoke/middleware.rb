@@ -5,7 +5,8 @@ module Slowpoke
     end
 
     def call(env)
-      response = @app.call(env)
+      @app.call(env)
+    ensure
       if env[Slowpoke::ENV_KEY]
         # extremely important
         # protect the process with a restart
@@ -17,7 +18,6 @@ module Slowpoke
           Process.kill("QUIT", Process.pid)
         end
       end
-      response
     end
   end
 end
