@@ -1,7 +1,6 @@
 require "slowpoke/version"
-require "rack-timeout"
+require "rack/timeout/base"
 require "safely_block"
-require "slowpoke/controller"
 require "slowpoke/middleware"
 require "slowpoke/migration"
 require "slowpoke/railtie"
@@ -37,6 +36,3 @@ Rack::Timeout.register_state_change_observer(:slowpoke) do |env|
     ActiveSupport::Notifications.instrument("timeout.slowpoke", {})
   end
 end
-
-# bubble exceptions for error reporting libraries
-ActionController::Base.send(:include, Slowpoke::Controller)

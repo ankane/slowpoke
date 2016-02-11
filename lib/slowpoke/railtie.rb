@@ -3,10 +3,12 @@ module Slowpoke
     initializer "slowpoke" do |app|
       Rack::Timeout.timeout = Slowpoke.timeout
 
-      # prevent RequestExpiryError from killing web server
-      app.config.middleware.delete "Rack::Timeout"
       app.config.middleware.insert_before "ActionDispatch::RemoteIp", "Rack::Timeout"
+
+      # prevent RequestExpiryError from killing web server
       app.config.middleware.insert 0, Slowpoke::Middleware
+
+      require "rack/timeout/rollbar" if defined?(Rollbar)
     end
   end
 end
