@@ -7,8 +7,6 @@ module Slowpoke
 
       # prevent RequestExpiryError from killing web server
       app.config.middleware.insert 0, Slowpoke::Middleware
-
-      require "rack/timeout/rollbar" if defined?(Rollbar)
     end
   end
 end
