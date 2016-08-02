@@ -16,4 +16,6 @@ module Slowpoke
   end
 end
 
-ActiveRecord::Migration.prepend(Slowpoke::Migration)
+ActiveSupport.on_load(:active_record) do
+  ActiveRecord::Migration.prepend(Slowpoke::Migration)
+end
