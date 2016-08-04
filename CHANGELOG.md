@@ -1,4 +1,4 @@
-## 0.1.3 [unreleased]
+## 0.1.3
 
 - Fixed deprecation warning in Rails 5
 - No longer requires ActiveRecord
