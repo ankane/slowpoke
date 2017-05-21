@@ -7,7 +7,7 @@ module Slowpoke
     def call(env)
       @app.call(env)
     ensure
-      if env[Slowpoke::ENV_KEY] && !Rails.env.development?
+      if env[Slowpoke::ENV_KEY]
         # extremely important
         # protect the process with a restart
         # https://github.com/heroku/rack-timeout/issues/39
