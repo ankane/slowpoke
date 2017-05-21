@@ -18,6 +18,10 @@ module Slowpoke
     timeout = timeout.to_i if timeout.respond_to?(:to_i)
     @timeout = Rack::Timeout.timeout = timeout
   end
+
+  def self.migration_statement_timeout
+    ENV["MIGRATION_STATEMENT_TIMEOUT"]
+  end
 end
 
 # custom error page

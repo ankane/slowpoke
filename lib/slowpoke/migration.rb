@@ -1,17 +1,12 @@
 module Slowpoke
   module Migration
     def connection
-      if ENV["MIGRATION_STATEMENT_TIMEOUT"]
-        @connection_with_timeout ||= begin
-          config = ActiveRecord::Base.connection_config
-          config["variables"] ||= {}
-          config["variables"]["statement_timeout"] = ENV["MIGRATION_STATEMENT_TIMEOUT"].to_i
-          ActiveRecord::Base.establish_connection(config)
-          ActiveRecord::Base.connection
-        end
-      else
-        super
+      connection = super
+      if Slowpoke.migration_statement_timeout && !@migration_statement_timeout_set
+        connection.execute("SET statement_timeout = #{Slowpoke.migration_statement_timeout.to_i}")
+        @migration_statement_timeout_set = true
       end
+      connection
     end
   end
 end

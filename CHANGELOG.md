@@ -1,3 +1,7 @@
+## 0.1.4 [unreleased]
+
+- Fixed migration statement timeout
+
 ## 0.1.3
 
 - Fixed deprecation warning in Rails 5
