@@ -1,6 +1,5 @@
 require "slowpoke/version"
 require "rack/timeout/base"
-require "safely_block"
 require "slowpoke/middleware"
 require "slowpoke/migration"
 require "slowpoke/railtie"
