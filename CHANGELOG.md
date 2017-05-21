@@ -2,6 +2,7 @@
 
 - Fixed custom error pages for Rails 5.1
 - Fixed migration statement timeout
+- Don’t kill server in development
 
 ## 0.1.3
 
