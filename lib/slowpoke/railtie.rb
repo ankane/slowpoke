@@ -7,7 +7,7 @@ module Slowpoke
       else
         app.config.middleware.insert_before ActionDispatch::RemoteIp, Rack::Timeout
       end
-      app.config.middleware.insert(0, Slowpoke::Middleware) unless Rails.env.development?
+      app.config.middleware.insert(0, Slowpoke::Middleware) unless Rails.env.development? || Rails.env.test?
     end
   end
 end
