@@ -15,7 +15,7 @@ module Slowpoke
 
   def self.timeout=(timeout)
     timeout = timeout.to_i if timeout.respond_to?(:to_i)
-    @timeout = Rack::Timeout.timeout = timeout
+    @timeout = Rack::Timeout.service_timeout = timeout
   end
 
   def self.migration_statement_timeout
