@@ -3,7 +3,7 @@ module Slowpoke
     def connection
       connection = super
       if Slowpoke.migration_statement_timeout && !@migration_statement_timeout_set
-        connection.execute("SET statement_timeout = #{Slowpoke.migration_statement_timeout.to_i}")
+        connection.execute("SET LOCAL statement_timeout = #{Slowpoke.migration_statement_timeout.to_i}")
         @migration_statement_timeout_set = true
       end
       connection
