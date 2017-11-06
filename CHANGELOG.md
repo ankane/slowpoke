@@ -1,4 +1,4 @@
-## 0.2.0 [unreleased]
+## 0.2.0
 
 - Fixed custom error pages for Rails 5.1
 - Fixed migration statement timeout
