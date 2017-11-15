@@ -1,3 +1,7 @@
+## 0.2.1 [unreleased]
+
+- Don’t kill server in test environment
+
 ## 0.2.0
 
 - Fixed custom error pages for Rails 5.1
