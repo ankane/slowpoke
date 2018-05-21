@@ -1,6 +1,6 @@
 # Slowpoke
 
-[Rack::Timeout](https://github.com/heroku/rack-timeout) is great. Slowpoke makes it better with:
+[Rack::Timeout](https://github.com/heroku/rack-timeout) enhancements for Rails
 
 - custom error pages
 - [safer service timeouts](https://github.com/heroku/rack-timeout/issues/39)

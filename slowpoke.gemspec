@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Slowpoke::VERSION
   spec.authors       = ["Andrew Kane"]
   spec.email         = ["andrew@chartkick.com"]
-  spec.summary       = "Rack::Timeout is great. Slowpoke makes it better."
+  spec.summary       = "Rack::Timeout enhancements for Rails"
   spec.homepage      = "https://github.com/ankane/slowpoke"
   spec.license       = "MIT"
 
