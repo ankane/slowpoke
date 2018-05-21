@@ -9,7 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Andrew Kane"]
   spec.email         = ["andrew@chartkick.com"]
   spec.summary       = "Rack::Timeout is great. Slowpoke makes it better."
-  spec.description   = "Rack::Timeout is great. Slowpoke makes it better."
   spec.homepage      = "https://github.com/ankane/slowpoke"
   spec.license       = "MIT"
 
@@ -18,8 +17,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails"
-  spec.add_dependency "rack-timeout", ">= 0.3.0"
+  spec.add_dependency "railties"
+  spec.add_dependency "actionpack"
+  spec.add_dependency "rack-timeout", ">= 0.3.0", "< 0.5.0"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"

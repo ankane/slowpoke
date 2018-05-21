@@ -1,6 +1,7 @@
 ## 0.2.1 [unreleased]
 
 - Don’t kill server in test environment
+- Require rack-timeout < 0.5
 
 ## 0.2.0
 
