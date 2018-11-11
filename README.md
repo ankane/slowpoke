@@ -52,6 +52,10 @@ end
 
 To learn more, see the [Rack::Timeout documentation](https://github.com/heroku/rack-timeout#the-rabbit-hole).
 
+## Threaded Servers
+
+The only safe way to recover from a request timeout is to spawn a new process. For threaded servers like Puma, this means killing all threads when any one of them times out. This can have a significant impact on performance.
+
 ## Database Timeouts
 
 For PostgreSQL, set connect and statement timeouts in `config/database.yml`:
