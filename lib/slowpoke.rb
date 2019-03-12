@@ -10,7 +10,12 @@ module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
 
   def self.timeout
-    @timeout ||= (ENV["REQUEST_TIMEOUT"] || ENV["TIMEOUT"] || 15).to_i
+    @timeout ||= (
+      ENV["RACK_TIMEOUT_SERVICE_TIMEOUT"] ||
+      ENV["REQUEST_TIMEOUT"] ||
+      ENV["TIMEOUT"] ||
+      15
+    ).to_i
   end
 
   def self.timeout=(timeout)
