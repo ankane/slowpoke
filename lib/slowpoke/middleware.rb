@@ -15,7 +15,7 @@ module Slowpoke
         if defined?(::PhusionPassenger)
           `passenger-config detach-process #{Process.pid}`
         else
-          Process.kill("QUIT", Process.pid)
+          Process.kill(Slowpoke.signal, Process.pid)
         end
       end
     end

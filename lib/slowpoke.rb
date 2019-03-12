@@ -8,6 +8,7 @@ require "action_controller/base"
 
 module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
+  SIGNAL = "QUIT".freeze
 
   def self.timeout
     @timeout ||= (ENV["REQUEST_TIMEOUT"] || ENV["TIMEOUT"] || 15).to_i
@@ -16,6 +17,14 @@ module Slowpoke
   def self.timeout=(timeout)
     timeout = timeout.to_i if timeout.respond_to?(:to_i)
     @timeout = Rack::Timeout.service_timeout = timeout
+  end
+
+  def self.signal
+    @signal ||= SIGNAL
+  end
+
+  def self.signal=(signal)
+    @signal = signal
   end
 
   def self.migration_statement_timeout
