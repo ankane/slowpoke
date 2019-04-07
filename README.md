@@ -35,7 +35,7 @@ Test by adding a `sleep` call to one of your actions:
 sleep(20)
 ```
 
-**Note:** Your custom error page will only show up in non-development environments. Development shows exception details.
+**Note:** Your custom error page will not show up in development, since development shows exception details. Visit [http://localhost:3000/503](http://localhost:3000/503) to see the error page.
 
 Subscribe to timeouts with:
 
