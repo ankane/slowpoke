@@ -1,7 +1,8 @@
 ## 0.3.0 [unreleased]
 
-- Dropped support for rack-timeout < 0.4
 - Use proper signal for Puma
+- Dropped support for rack-timeout < 0.4
+- Dropped support for migration timeouts
 
 ## 0.2.1
 

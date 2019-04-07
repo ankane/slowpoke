@@ -1,7 +1,6 @@
 require "slowpoke/version"
 require "rack/timeout/base"
 require "slowpoke/middleware"
-require "slowpoke/migration"
 require "slowpoke/railtie"
 require "action_dispatch/middleware/exception_wrapper"
 require "action_controller/base"
