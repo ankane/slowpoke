@@ -4,7 +4,6 @@
 
 - custom error pages
 - [safer service timeouts](https://github.com/heroku/rack-timeout/issues/39)
-- wait timeouts that don’t kill your web server
 
 ## Installation
 
@@ -24,16 +23,10 @@ This creates a `public/503.html` you can customize.
 
 ## How to Use
 
-The default timeout is 15 seconds. Change this with:
+The default timeout is 15 seconds. Change this in `config/environments/production.rb` with:
 
 ```ruby
-Slowpoke.timeout = 10
-```
-
-or set:
-
-```ruby
-ENV["REQUEST_TIMEOUT"]
+Slowpoke.timeout = 5
 ```
 
 Test by adding a `sleep` call to one of your actions:
@@ -41,6 +34,8 @@ Test by adding a `sleep` call to one of your actions:
 ```ruby
 sleep(20)
 ```
+
+**Note:** Your custom error page will only show up in non-development environments. Development shows exception details.
 
 Subscribe to timeouts with:
 
@@ -50,7 +45,7 @@ ActiveSupport::Notifications.subscribe "timeout.slowpoke" do |name, start, finis
 end
 ```
 
-To learn more, see the [Rack::Timeout documentation](https://github.com/heroku/rack-timeout#the-rabbit-hole).
+To learn more, see the [Rack::Timeout documentation](https://github.com/heroku/rack-timeout).
 
 ## Threaded Servers
 
@@ -88,7 +83,9 @@ SELECT pg_sleep(20);
 
 ## Upgrading
 
-`0.1.0` removes database timeouts, since Rails supports them by default.  To restore the previous behavior, use:
+### 0.1.0
+
+`0.1.0` removes database timeouts, since Rails supports them by default. To restore the previous behavior, use:
 
 ```yaml
 production:
