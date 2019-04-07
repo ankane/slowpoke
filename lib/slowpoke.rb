@@ -7,10 +7,6 @@ require "action_controller/base"
 
 module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
-
-  def self.migration_statement_timeout
-    ENV["MIGRATION_STATEMENT_TIMEOUT"]
-  end
 end
 
 # custom error page
