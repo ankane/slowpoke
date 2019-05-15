@@ -3,6 +3,7 @@
 - Use proper signal for Puma
 - Dropped support for rack-timeout < 0.4
 - Dropped support for migration timeouts
+- Dropped support for Rails < 5
 
 ## 0.2.1
 
