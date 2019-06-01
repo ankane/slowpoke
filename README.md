@@ -21,9 +21,9 @@ rails generate slowpoke:install
 
 This creates a `public/503.html` you can customize.
 
-## Trying It in Development
+## Development
 
-Temporarily add to `config/environments/development.rb`:
+To try out custom error pages in development, temporarily add to `config/environments/development.rb`:
 
 ```ruby
 config.slowpoke.timeout = 1
@@ -38,7 +38,7 @@ sleep(2)
 
 The custom error page should appear.
 
-## Configuring It for Production
+## Production
 
 The default timeout is 15 seconds. You can change this in `config/environments/production.rb` with:
 
