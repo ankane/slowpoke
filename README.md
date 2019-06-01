@@ -21,21 +21,30 @@ rails generate slowpoke:install
 
 This creates a `public/503.html` you can customize.
 
-## How to Use
+## Trying It in Development
 
-The default timeout is 15 seconds. Change this in `config/environments/production.rb` with:
-
-```ruby
-Slowpoke.timeout = 5
-```
-
-Test by adding a `sleep` call to one of your actions:
+Temporarily add to `config/environments/development.rb`:
 
 ```ruby
-sleep(20)
+config.slowpoke.timeout = 1
+config.consider_all_requests_local = false
 ```
 
-**Note:** Your custom error page will not show up in development, since development shows exception details. Visit [http://localhost:3000/503](http://localhost:3000/503) to see the error page.
+And add a `sleep` call to one of your actions:
+
+```ruby
+sleep(2)
+```
+
+The custom error page should appear.
+
+## Configuring It for Production
+
+The default timeout is 15 seconds. You can change this in `config/environments/production.rb` with:
+
+```ruby
+config.slowpoke.timeout = 5
+```
 
 Subscribe to timeouts with:
 
@@ -56,6 +65,22 @@ The only safe way to recover from a request timeout is to spawn a new process. F
 It’s a good idea to set a [statement timeout](https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/#statement-timeouts-1) and a [connect timeout](https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/#activerecord).
 
 ## Upgrading
+
+### 0.3.0
+
+If you set the timeout with:
+
+```ruby
+Slowpoke.timeout = 5
+```
+
+Remove it and add to `config/environments/production.rb`:
+
+```ruby
+config.slowpoke.timeout = 5
+```
+
+If you use migration timeouts, check out [this guide](https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/#statement-timeouts-1) for how to configure them directly in `config/database.yml`.
 
 ### 0.1.0
 

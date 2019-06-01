@@ -1,4 +1,4 @@
-## 0.3.0 [unreleased]
+## 0.3.0
 
 - Use proper signal for Puma
 - Dropped support for rack-timeout < 0.4
