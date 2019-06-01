@@ -62,7 +62,14 @@ The only safe way to recover from a request timeout is to spawn a new process. F
 
 ## Database Timeouts
 
-It’s a good idea to set a [statement timeout](https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/#statement-timeouts-1) and a [connect timeout](https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/#activerecord).
+It’s a good idea to set a [statement timeout](https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/#statement-timeouts-1) and a [connect timeout](https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/#activerecord). For Postgres, your `config/database.yml` should include something like:
+
+```yml
+production:
+  connect_timeout: 3 # sec
+  variables:
+    statement_timeout: 5s
+```
 
 ## Upgrading
 
