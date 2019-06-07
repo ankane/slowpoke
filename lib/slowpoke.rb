@@ -1,17 +1,14 @@
-require "slowpoke/version"
+# dependencies
 require "rack/timeout/base"
+
+# modules
 require "slowpoke/middleware"
 require "slowpoke/railtie"
-require "action_dispatch/middleware/exception_wrapper"
-require "action_controller/base"
+require "slowpoke/version"
 
 module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
 end
-
-# custom error page
-ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestTimeoutError"] = :service_unavailable
-ActionDispatch::ExceptionWrapper.rescue_responses["Rack::Timeout::RequestExpiryError"] = :service_unavailable
 
 # remove noisy logger
 Rack::Timeout.unregister_state_change_observer(:logger)
