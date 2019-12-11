@@ -1,4 +1,4 @@
-## 0.3.1 (unreleased)
+## 0.3.1 (2019-12-10)
 
 - Added support for conditional timeouts
 
