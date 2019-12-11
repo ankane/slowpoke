@@ -4,6 +4,7 @@ require "rack/timeout/base"
 # modules
 require "slowpoke/middleware"
 require "slowpoke/railtie"
+require "slowpoke/timeout"
 require "slowpoke/version"
 
 module Slowpoke

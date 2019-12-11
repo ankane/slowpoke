@@ -1,3 +1,7 @@
+## 0.3.1 (unreleased)
+
+- Added support for conditional timeouts
+
 ## 0.3.0 (2019-05-31)
 
 - Use proper signal for Puma

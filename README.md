@@ -2,6 +2,7 @@
 
 [Rack::Timeout](https://github.com/heroku/rack-timeout) enhancements for Rails
 
+- conditional timeouts
 - custom error pages
 - [safer service timeouts](https://github.com/heroku/rack-timeout/issues/39)
 
@@ -44,6 +45,15 @@ The default timeout is 15 seconds. You can change this in `config/environments/p
 
 ```ruby
 config.slowpoke.timeout = 5
+```
+
+For conditional timeouts, use:
+
+```ruby
+config.slowpoke.timeout = lambda do |env|
+  request = Rack::Request.new(env)
+  request.path.start_with?("/admin") ? 15 : 5
+end
 ```
 
 Subscribe to timeouts with:
