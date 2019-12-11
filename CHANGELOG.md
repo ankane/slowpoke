@@ -1,6 +1,6 @@
 ## 0.3.1 (2019-12-10)
 
-- Added support for conditional timeouts
+- Added support for dynamic timeouts
 
 ## 0.3.0 (2019-05-31)
 
