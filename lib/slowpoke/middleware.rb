@@ -12,13 +12,7 @@ module Slowpoke
         # protect the process with a restart
         # https://github.com/heroku/rack-timeout/issues/39
         # can't do in timed_out state consistently
-        if defined?(::PhusionPassenger)
-          `passenger-config detach-process #{Process.pid}`
-        elsif defined?(::Puma)
-          Process.kill("TERM", Process.pid)
-        else
-          Process.kill("QUIT", Process.pid)
-        end
+        Slowpoke.kill
       end
     end
   end

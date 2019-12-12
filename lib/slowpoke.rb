@@ -9,6 +9,16 @@ require "slowpoke/version"
 
 module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
+
+  def self.kill
+    if defined?(::PhusionPassenger)
+      `passenger-config detach-process #{Process.pid}`
+    elsif defined?(::Puma)
+      Process.kill("TERM", Process.pid)
+    else
+      Process.kill("QUIT", Process.pid)
+    end
+  end
 end
 
 # remove noisy logger
