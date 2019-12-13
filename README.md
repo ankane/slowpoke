@@ -78,8 +78,17 @@ You can customize this behavior with: [master]
 Slowpoke.on_timeout do |env|
   next if Rails.env.development? || Rails.env.test?
 
-  Slowpoke.kill
+  exception = env["action_dispatch.exception"]
+  if exception && exception.backtrace.first.include?("/active_record/")
+    Slowpoke.kill
+  end
 end
+```
+
+Note: To access `env["action_dispatch.exception"]` in development, temporarily add to `config/environments/development.rb`:
+
+```ruby
+config.consider_all_requests_local = false
 ```
 
 ## Database Timeouts
