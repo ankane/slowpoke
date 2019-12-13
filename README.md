@@ -2,9 +2,9 @@
 
 [Rack::Timeout](https://github.com/heroku/rack-timeout) enhancements for Rails
 
+- safer service timeouts
 - dynamic timeouts
 - custom error pages
-- safer service timeouts
 
 ## Installation
 
