@@ -4,7 +4,7 @@
 
 - dynamic timeouts
 - custom error pages
-- [safer service timeouts](https://github.com/heroku/rack-timeout/issues/39)
+- safer service timeouts
 
 ## Installation
 
@@ -68,7 +68,7 @@ To learn more, see the [Rack::Timeout documentation](https://github.com/heroku/r
 
 ## Safer Service Timeouts
 
-Rack::Timeout can raise an exception at any point in the code, which can leave your app in an unclean state. The safest way to recover from a request timeout is to spawn a new process. This is the default behavior for Slowpoke.
+Rack::Timeout can raise an exception at any point in the code, which can leave your app in an [unclean state](https://www.schneems.com/2017/02/21/the-oldest-bug-in-ruby-why-racktimeout-might-hose-your-server/). The safest way to recover from a request timeout is to spawn a new process. This is the default behavior for Slowpoke.
 
 For threaded servers like Puma, this means killing all threads when any one of them times out. This can have a significant impact on performance.
 
