@@ -20,7 +20,7 @@ module Slowpoke
           service_timeout: service_timeout.to_i
       end
 
-      app.config.middleware.insert(0, Slowpoke::Middleware) unless Rails.env.development? || Rails.env.test?
+      app.config.middleware.insert(0, Slowpoke::Middleware)
     end
   end
 end

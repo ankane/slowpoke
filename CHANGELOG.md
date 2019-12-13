@@ -1,3 +1,7 @@
+## 0.4.0 (unreleased)
+
+- Added `on_timeout` method
+
 ## 0.3.1 (2019-12-10)
 
 - Added support for dynamic timeouts

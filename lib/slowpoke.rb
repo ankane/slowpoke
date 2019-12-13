@@ -19,6 +19,20 @@ module Slowpoke
       Process.kill("QUIT", Process.pid)
     end
   end
+
+  def self.on_timeout(&block)
+    if block_given?
+      @on_timeout = block
+    else
+      @on_timeout
+    end
+  end
+
+  on_timeout do |env|
+    next if Rails.env.development? || Rails.env.test?
+
+    Slowpoke.kill
+  end
 end
 
 # remove noisy logger

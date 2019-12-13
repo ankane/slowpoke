@@ -66,9 +66,21 @@ end
 
 To learn more, see the [Rack::Timeout documentation](https://github.com/heroku/rack-timeout).
 
-## Threaded Servers
+## Safer Service Timeouts
 
-The only safe way to recover from a request timeout is to spawn a new process. For threaded servers like Puma, this means killing all threads when any one of them times out. This can have a significant impact on performance.
+Rack::Timeout can raise an exception at any point in the code, which can leave your app in an unclean state. The safest way to recover from a request timeout is to spawn a new process. This is the default behavior for Slowpoke.
+
+For threaded servers like Puma, this means killing all threads when any one of them times out. This can have a significant impact on performance.
+
+You can customize this behavior with: [master]
+
+```ruby
+Slowpoke.on_timeout do |env|
+  next if Rails.env.development? || Rails.env.test?
+
+  Slowpoke.kill
+end
+```
 
 ## Database Timeouts
 
