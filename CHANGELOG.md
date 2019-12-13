@@ -1,4 +1,4 @@
-## 0.4.0 (unreleased)
+## 0.3.2 (unreleased)
 
 - Added `on_timeout` method
 
