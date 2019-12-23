@@ -72,7 +72,7 @@ Rack::Timeout can raise an exception at any point in the code, which can leave y
 
 For threaded servers like Puma, this means killing all threads when any one of them times out. This can have a significant impact on performance.
 
-You can customize this behavior with: [master]
+You can customize this behavior with:
 
 ```ruby
 Slowpoke.on_timeout do |env|
