@@ -1,3 +1,7 @@
+## 0.4.0 (unreleased)
+
+- Dropped support for Ruby < 2.6 and Rails < 5.2
+
 ## 0.3.2 (2019-12-23)
 
 - Added `on_timeout` method
