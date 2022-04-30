@@ -6,6 +6,8 @@
 - dynamic timeouts
 - custom error pages
 
+[![Build Status](https://github.com/ankane/slowpoke/workflows/build/badge.svg?branch=master)](https://github.com/ankane/slowpoke/actions)
+
 ## Installation
 
 Add this line to your application’s Gemfile:
@@ -149,4 +151,5 @@ To get started with development:
 git clone https://github.com/ankane/slowpoke.git
 cd slowpoke
 bundle install
+bundle exec rake test
 ```
