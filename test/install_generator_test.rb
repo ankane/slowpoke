@@ -5,6 +5,7 @@ require "generators/slowpoke/install_generator"
 class InstallGeneratorTest < Rails::Generators::TestCase
   tests Slowpoke::Generators::InstallGenerator
   destination File.expand_path("../tmp", __dir__)
+  setup :prepare_destination
 
   def test_works
     run_generator
