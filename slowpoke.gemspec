@@ -17,5 +17,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "railties", ">= 6.1"
   spec.add_dependency "actionpack"
-  spec.add_dependency "rack-timeout", ">= 0.4"
+  spec.add_dependency "rack-timeout", ">= 0.6"
 end
