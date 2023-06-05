@@ -2,10 +2,10 @@
 require "rack/timeout/base"
 
 # modules
-require "slowpoke/middleware"
-require "slowpoke/railtie"
-require "slowpoke/timeout"
-require "slowpoke/version"
+require_relative "slowpoke/middleware"
+require_relative "slowpoke/railtie"
+require_relative "slowpoke/timeout"
+require_relative "slowpoke/version"
 
 module Slowpoke
   ENV_KEY = "slowpoke.timed_out".freeze
