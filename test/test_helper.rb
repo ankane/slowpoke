@@ -10,7 +10,7 @@ Combustion.path = "test/internal"
 Combustion.initialize! :action_controller do
   config.action_controller.logger = logger
 
-  config.action_dispatch.show_exceptions = true
+  config.action_dispatch.show_exceptions = Rails.version.to_f >= 7.1 ? :all : true
   config.consider_all_requests_local = false
 
   config.slowpoke.timeout = lambda do |env|
