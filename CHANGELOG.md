@@ -36,7 +36,7 @@
 ## 0.1.3 (2016-08-03)
 
 - Fixed deprecation warning in Rails 5
-- No longer requires ActiveRecord
+- No longer requires Active Record
 
 ## 0.1.2 (2016-02-10)
 
