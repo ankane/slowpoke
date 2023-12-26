@@ -8,6 +8,7 @@ logger = ActiveSupport::Logger.new(ENV["VERBOSE"] ? STDOUT : nil)
 
 Combustion.path = "test/internal"
 Combustion.initialize! :action_controller do
+  config.load_defaults Rails::VERSION::STRING.to_f
   config.action_controller.logger = logger
 
   config.action_dispatch.show_exceptions = Rails.version.to_f >= 7.1 ? :all : true
