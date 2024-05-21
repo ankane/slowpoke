@@ -6,7 +6,7 @@
 - dynamic timeouts
 - custom error pages
 
-[![Build Status](https://github.com/ankane/slowpoke/workflows/build/badge.svg?branch=master)](https://github.com/ankane/slowpoke/actions)
+[![Build Status](https://github.com/ankane/slowpoke/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/slowpoke/actions)
 
 ## Installation
 
