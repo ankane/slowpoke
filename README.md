@@ -104,34 +104,6 @@ production:
     statement_timeout: 5s
 ```
 
-## Upgrading
-
-### 0.3.0
-
-If you set the timeout with:
-
-```ruby
-Slowpoke.timeout = 5
-```
-
-Remove it and add to `config/environments/production.rb`:
-
-```ruby
-config.slowpoke.timeout = 5
-```
-
-If you use migration timeouts, check out [this guide](https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/#statement-timeouts-1) for how to configure them directly in `config/database.yml`.
-
-### 0.1.0
-
-`0.1.0` removes database timeouts, since Rails supports them by default. To restore the previous behavior, use:
-
-```yaml
-production:
-  variables:
-    statement_timeout: <%= Slowpoke.timeout * 1000 %>
-```
-
 ## History
 
 View the [changelog](https://github.com/ankane/slowpoke/blob/master/CHANGELOG.md)
