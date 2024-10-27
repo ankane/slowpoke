@@ -46,3 +46,32 @@
 
 - Fixed safer service timeouts
 - Added migration statement timeout
+
+## 0.1.0 (2015-06-24)
+
+- Prevent `RequestExpiryError` from killing web server
+- Removed database timeouts
+
+## 0.0.6 (2015-03-15)
+
+- Switched to `safely_block` gem
+
+## 0.0.5 (2015-03-04)
+
+- Fixed error when Postgres is not used
+
+## 0.0.4 (2014-10-31)
+
+- Added `REQUEST_TIMEOUT` and `DATABASE_TIMEOUT` variables
+
+## 0.0.3 (2014-10-22)
+
+- Improved handling of timeouts
+
+## 0.0.2 (2014-10-22)
+
+- Added process protection
+
+## 0.0.1 (2014-10-21)
+
+- First release
