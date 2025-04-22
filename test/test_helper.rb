@@ -19,3 +19,8 @@ Combustion.initialize! :action_controller do
     request.path.start_with?("/admin") ? 1 : 0.1
   end
 end
+
+# https://github.com/rails/rails/issues/54595
+if RUBY_ENGINE == "jruby" && Rails::VERSION::MAJOR >= 8
+  Rails.application.routes_reloader.execute
+end
