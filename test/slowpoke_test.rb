@@ -1,6 +1,13 @@
 require_relative "test_helper"
 
 class SlowpokeTest < ActionDispatch::IntegrationTest
+  def setup
+    # https://github.com/rails/rails/issues/54595
+    if RUBY_ENGINE == "jruby" && Rails::VERSION::MAJOR >= 8
+      Rails.application.reload_routes_unless_loaded
+    end
+  end
+
   def test_timeout
     get timeout_url
     assert_response :service_unavailable
